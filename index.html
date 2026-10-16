@@ -1,0 +1,23 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FlowUP – stoisko targowe 3D</title>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+<style>html,body{margin:0;height:100%;font-family:system-ui,sans-serif;background:#eef0f3}
+model-viewer{width:100%;height:100%;--poster-color:#eef0f3}
+#ui{position:fixed;top:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:2}
+#ui button{padding:10px 18px;border:0;border-radius:20px;background:#fff;box-shadow:0 2px 8px #0002;font-size:15px;cursor:pointer}
+#ui button.on{background:#111;color:#fff}
+#cap{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:#fffd;padding:8px 14px;border-radius:10px;font-size:14px;text-align:center;max-width:92%}
+#load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:16px;color:#555}</style></head><body>
+<div id="ui"><button data-s="3x3" class="on">3×3 m</button><button data-s="3x6">3×6 m</button></div>
+<div id="load">Ładowanie modelu…</div>
+<model-viewer id="mv" camera-controls touch-action="none" environment-image="neutral" exposure="1" shadow-intensity="1" shadow-softness="0.8" camera-orbit="35deg 70deg auto" interaction-prompt="auto" alt="Stoisko FlowUP"></model-viewer>
+<div id="cap">Stoisko targowe FlowUP — obracaj przeciągając, przybliżaj kółkiem lub dwoma palcami, przesuwaj prawym przyciskiem lub dwoma palcami.</div>
+<script>
+const mv=document.getElementById('mv'),cache={},ld=document.getElementById('load');
+async function load(s){ld.style.display='flex';
+ cache[s]='flowup_'+s+'.glb';
+ mv.src=cache[s];}
+mv.addEventListener('load',()=>{ld.style.display='none'});
+document.querySelectorAll('#ui button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#ui button').forEach(x=>x.classList.toggle('on',x===b));load(b.dataset.s)});
+load('3x3');
+</script></body></html>
